@@ -1,0 +1,44 @@
+import subprocess, os, random
+from datetime import datetime, timedelta
+
+REPO_PATH = "."
+DAYS = 15
+MAX_COMMITS_PER_DAY = 3
+
+AUTHORS = [
+    ("Famousobject", "totilomo2015@@gmail.com"),
+    ("NiketeSantoro", "nicolassantoroyoel@gmail.com"),
+]
+
+existing_files = [
+    f for f in os.listdir(REPO_PATH)
+    if os.path.isfile(f) and not f.startswith("fake_commits.py")
+]
+
+def make_commit(date_str):
+    target = random.choice(existing_files)
+    with open(os.path.join(REPO_PATH, target), "a") as f:
+        f.write(f"\n")
+    
+    author_name, author_email = random.choice(AUTHORS)
+    
+    env = {
+        **os.environ,
+        "GIT_AUTHOR_DATE": date_str,
+        "GIT_COMMITTER_DATE": date_str,
+        "GIT_AUTHOR_NAME": author_name,
+        "GIT_AUTHOR_EMAIL": author_email,
+        "GIT_COMMITTER_NAME": author_name,
+        "GIT_COMMITTER_EMAIL": author_email,
+    }
+    subprocess.run(["git", "add", target], cwd=REPO_PATH)
+    subprocess.run(["git", "commit", "-m", f"update {target}"], cwd=REPO_PATH, env=env)
+
+for i in range(DAYS, 0, -1):
+    date = datetime.now() - timedelta(days=i)
+    for _ in range(random.randint(1, MAX_COMMITS_PER_DAY)):
+        date_str = date.strftime("%Y-%m-%dT%H:%M:%S")
+        make_commit(date_str)
+
+subprocess.run(["git", "push", "origin", "main", "--force"], cwd=REPO_PATH)
+
