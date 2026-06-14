@@ -8,20 +8,25 @@
 **Alternativa B: Sistema Inteligente de Trafico y Emergencias**
 
 ## Descripcion del proyecto
-El sistema administra una ciudad inteligente con intersecciones, calles, dispositivos viales, emergencias, zonas territoriales y flujo vehicular.
+El proyecto simula parte de un sistema de ciudad inteligente orientado a la administracion de la red vial y a la respuesta ante emergencias.
 
-El objetivo es aplicar estructuras de datos vistas en Programacion II para resolver una problematica real de trafico y respuesta ante incidentes.
+
+1. Gestion de la red vial.
+2. Despacho de emergencias por prioridad.
+
+El sistema permite representar intersecciones y calles de una ciudad mediante un grafo, calcular la ruta mas corta entre dos puntos y asignar asistencia a los incidentes segun su nivel de prioridad.
 
 ## Estructuras de datos utilizadas
 
 ### 1. Lista enlazada doble
 Clases: `NodoDoble`, `ListaDoble`
 
-Se usa para almacenar colecciones dinamicas, por ejemplo:
-- intersecciones del grafo;
-- calles adyacentes de cada interseccion;
-- historial cronologico de emergencias;
-- zonas, barrios y manzanas.
+Se utiliza como estructura dinamica base del proyecto.
+
+Usos principales:
+- almacenar las intersecciones cargadas en el grafo;
+- almacenar las calles adyacentes de cada interseccion;
+- guardar el historial cronologico de emergencias registradas.
 
 Operaciones implementadas:
 - insertar al inicio;
@@ -31,121 +36,107 @@ Operaciones implementadas:
 - buscar;
 - obtener por posicion;
 - modificar;
+- eliminar por valor;
 - mostrar hacia adelante;
-- mostrar hacia atras.
+- mostrar hacia atras;
+- consultar cantidad de elementos.
 
 ### 2. Grafo con lista de adyacencia
 Clases: `GrafoCiudad`, `Interseccion`, `Calle`, `Ruta`
 
-Representa el mapa vial de la ciudad.
+Se utiliza para representar el mapa vial de la ciudad.
 
-Cada interseccion es un vertice y cada calle es una arista con un costo expresado en minutos.
+Cada interseccion funciona como un vertice del grafo y cada calle funciona como una arista que conecta dos intersecciones. Las calles tienen un tiempo estimado de recorrido, expresado en minutos.
 
-Funcionalidades:
+Funcionalidades implementadas:
 - agregar intersecciones;
-- conectar intersecciones con calles;
-- mostrar el mapa;
-- cortar o habilitar calles;
-- calcular ruta mas corta entre dos puntos.
+- conectar intersecciones mediante calles;
+- mostrar el mapa de la ciudad;
+- calcular la ruta mas corta entre dos intersecciones;
+- habilitar o cortar una calle para modificar el recorrido disponible.
 
 ### 3. Cola con prioridad
 Clases: `ColaPrioridadEmergencias`, `Emergencia`, `SistemaEmergencias`
 
-Se usa para administrar incidentes y despachar primero los casos mas urgentes.
+Se utiliza para administrar el orden de atencion de las emergencias registradas.
 
-Criterio de orden:
-1. mayor prioridad;
-2. si tienen igual prioridad, primero el reporte mas antiguo.
-
-### 4. Arbol AVL
-Clases: `ArbolAVLDispositivos`, `Dispositivo`
-
-Se usa como indice de dispositivos viales por codigo.
-
-Funcionalidades:
-- insertar dispositivo;
-- buscar por codigo;
-- modificar estado;
-- mostrar en recorrido inorden;
-- mantener balanceo mediante rotaciones.
-
-### 5. Cola circular
-Clases: `ColaCircularVehiculos`, `Vehiculo`
-
-Se usa para simular el flujo vehicular de una interseccion.
-
-Los vehiculos salen en el mismo orden en que llegaron, respetando FIFO.
-
-### 6. Contenedores anidados
-Clases: `OrganizacionTerritorial`, `Zona`, `Barrio`, `Manzana`
-
-Representan la organizacion territorial:
-
-Ciudad -> Zonas -> Barrios -> Manzanas
-
-Permite generar reportes por zona, barrio y manzana.
+Criterio de prioridad:
+1. se atiende primero la emergencia con mayor prioridad;
+2. si dos emergencias tienen la misma prioridad, se atiende primero la que fue registrada antes;
+3. si tambien coinciden en el minuto de registro, se prioriza el menor numero de identificacion.
 
 ## Funcionalidades implementadas en esta segunda etapa
 
-1. **Modelado de la ciudad**
-   - La ciudad se representa con un grafo.
-   - Se pueden cargar intersecciones y calles.
-   - Se calcula la ruta mas corta entre dos puntos.
+### 1. Gestion de la red vial
+La ciudad se modela como un grafo de intersecciones y calles.
 
-2. **Despacho de emergencias**
-   - Se registran emergencias con prioridad.
-   - El sistema atiende primero la emergencia mas grave.
-   - Se mantiene un reporte cronologico de registros.
+El sistema permite:
+- cargar intersecciones;
+- conectar intersecciones mediante calles con tiempo de recorrido;
+- mostrar las conexiones existentes;
+- calcular el camino mas corto entre dos puntos.
 
-3. **Indexacion de dispositivos**
-   - Semaforos, camaras y sensores se almacenan en un AVL.
-   - Se pueden buscar y actualizar por codigo.
+Esta funcionalidad permite resolver consultas como: cual es la ruta mas rapida desde una interseccion origen hasta una interseccion destino.
 
-4. **Organizacion territorial**
-   - La ciudad se divide en zonas, barrios y manzanas.
-   - El sistema muestra un reporte territorial con incidentes.
+### 2. Despacho de emergencias
+El sistema permite registrar emergencias con los siguientes datos:
+- descripcion;
+- codigo de interseccion donde ocurre el incidente;
+- prioridad;
+- minuto de registro.
 
-5. **Flujo vehicular**
-   - Los vehiculos se administran mediante cola circular.
-   - Se libera primero el vehiculo que llego primero.
+Las emergencias pendientes se organizan con una cola con prioridad. Al atender una emergencia, el sistema toma la mas urgente y calcula la ruta mas corta desde la base de asistencia hasta la ubicacion del incidente.
 
-## Como ejecutar
+El sistema permite:
+- registrar una nueva emergencia;
+- listar emergencias pendientes ordenadas por prioridad;
+- atender la siguiente emergencia;
+- consultar el historial cronologico de emergencias registradas.
 
-Desde la carpeta del proyecto:
+## Menu de prueba
+El proyecto incluye una clase `Main` con un menu simple para demostrar las funcionalidades implementadas.
+
+Opciones disponibles:
+
+```text
+1. Gestion de red vial y ruta mas corta
+2. Despacho de emergencias por prioridad
+0. Salir
+```
+
+## Como ejecutar el proyecto
+Desde la carpeta del proyecto, ejecutar:
 
 ```bash
 javac src/*.java
 java -cp src Main
 ```
 
-En el menu principal, elegir la opcion `6` para ejecutar una demostracion completa.
+## Archivos principales
 
-## Link del repositorio
-PENDIENTE: agregar el link de GitHub despues de subir el proyecto.
+- `Main.java`: menu de prueba del sistema.
+- `GrafoCiudad.java`: administra el grafo de la ciudad y calcula rutas.
+- `Interseccion.java`: representa un vertice del grafo.
+- `Calle.java`: representa una conexion entre intersecciones.
+- `Ruta.java`: representa el resultado de una busqueda de camino.
+- `SistemaEmergencias.java`: registra y atiende emergencias.
+- `Emergencia.java`: contiene los datos de cada incidente.
+- `ColaPrioridadEmergencias.java`: organiza las emergencias segun prioridad.
+- `ListaDoble.java`: estructura dinamica utilizada por el sistema.
+- `NodoDoble.java`: nodo utilizado por la lista doble.
 
 ## Actividades realizadas por integrante
 
 ### Tomas Lomonaco
 - Implementacion de la lista enlazada doble.
 - Implementacion del grafo de ciudad.
-- Carga de intersecciones y calles.
-- Calculo de ruta mas corta.
-- Implementacion de cola circular para flujo vehicular.
-- Integracion en el menu de prueba.
+- Carga inicial de intersecciones y calles.
+- Implementacion del calculo de ruta mas corta.
+- Integracion de la gestion de red vial en el menu principal.
 
 ### Nicolas Santoro
-- Implementacion de cola con prioridad para emergencias.
+- Implementacion de la clase `Emergencia`.
+- Implementacion de la cola con prioridad para incidentes.
 - Implementacion del sistema de despacho de emergencias.
-- Implementacion del arbol AVL para dispositivos.
-- Implementacion de organizacion territorial por zonas, barrios y manzanas.
-- Redaccion del README y documentacion de funcionalidades.
-
-## Archivos principales
-
-- `Main.java`: menu de prueba y demo completa.
-- `GrafoCiudad.java`: mapa vial y rutas.
-- `ListaDoble.java`: estructura dinamica base.
-- `ColaPrioridadEmergencias.java`: atencion de incidentes por prioridad.
-- `ArbolAVLDispositivos.java`: indice de semaforos, camaras y sensores.
-- `ColaCircularVehiculos.java`: orden de salida de vehiculos.
-- `OrganizacionTerritorial.java`: estructura zona-barrio-manzana.
+- Integracion del despacho de emergencias con el grafo de ciudad.
+- Redaccion y actualizacion de la documentacion del proyecto.
