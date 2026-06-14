@@ -1,0 +1,26 @@
+public class NodoDoble<T> {
+    T dato;
+    NodoDoble<T> anterior;
+    NodoDoble<T> siguiente;
+
+    public NodoDoble(T dato) {
+        this.dato = dato;
+        this.anterior = null;
+        this.siguiente = null;
+    }
+}
+
+# 2026-06-05T21:57:05
+# 2026-05-30T21:59:54
+# 2026-06-02T21:59:55
+# 2026-06-11T21:59:58
+# 2026-06-07T22:01:27
+# 2026-06-01T22:12:26
+# 2026-06-04T22:12:27
+# 2026-06-03T22:14:36
+# 2026-06-05T22:14:37
+# 2026-06-10T22:14:38
+# 2026-06-11T22:14:39
+# 2026-06-07T22:15:01
+# 2026-06-12T22:15:02
+# 2026-05-30T22:18:00
