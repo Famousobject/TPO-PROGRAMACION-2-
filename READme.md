@@ -108,7 +108,7 @@ Funcionalidades asociadas:
 - Consultar el vehículo del frente.
 - Mostrar los vehículos en espera.
 
-## Funcionalidades implementadas en esta segunda etapa
+## Funcionalidades implementadas en la segunda etapa
 
 En esta segunda etapa se implementaron las siguientes funcionalidades principales:
 
@@ -164,7 +164,6 @@ https://github.com/Famousobject/TPO-PROGRAMACION-2-
 
 - Implementación de la cola con prioridad para emergencias.
 - Implementación del sistema de despacho de emergencias.
-- Implementación del árbol AVL para dispositivos.
 - Implementación del diccionario hash de dispositivos.
 - Implementación de la organización territorial mediante árbol N-ario.
 - Redacción y organización de documentación del proyecto.
@@ -182,5 +181,3 @@ Luego ejecutar la clase principal:
 ```bash
 java -cp src Main
 ```
-
-En el menú principal se pueden seleccionar las distintas opciones para probar las funcionalidades del sistema.
