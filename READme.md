@@ -184,15 +184,3 @@ java -cp src Main
 ```
 
 En el menú principal se pueden seleccionar las distintas opciones para probar las funcionalidades del sistema.
-
-## Restricciones de implementación
-
-El proyecto no utiliza colecciones nativas de Java como:
-
-- `ArrayList`
-- `HashMap`
-- `Queue`
-- `LinkedList`
-- `Stack`
-
-Todas las estructuras de datos fueron implementadas manualmente usando clases propias, nodos y referencias.
